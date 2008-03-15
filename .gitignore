@@ -1,0 +1,9 @@
+*.svn
+log/*
+tmp/*
+config/database.yml
+*.DS_Store
+db/*.db
+db/schema.rb
+index/*
+public/assets

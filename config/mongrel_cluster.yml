@@ -1,10 +1,9 @@
 --- 
 user: jclayton
 group: jclayton
-log_file: /users/home/jclayton/apps/jdclayton/shared/log/mongrel.log
+log_file: /users/home/jclayton/apps/jdclayton/shared/log/mongrel-4011.log
 cwd: /users/home/jclayton/apps/jdclayton/current
 port: 4011
 environment: production
-pid_file: tmp/pids/mongrel.pid
+pid_file: /users/home/jclayton/apps/jdclayton/shared/pids/mongrel-4011.pid
 address: 127.0.0.1
-servers: 1

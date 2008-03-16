@@ -27,6 +27,10 @@ task :symlink_logs, :roles => [:app] do
   run "ln -s #{shared_path}/log #{release_path}"
 end
 
+task :symlink_cache, :roles => [:app] do
+  run "ln -s #{shared_path}/cache #{release_path}/public"
+end
+
 task :symlink_web, :roles => [:app] do 
   run "rm -f /users/home/#{user}/web"
   run "ln -s #{current_path} /users/home/#{user}/web"
@@ -34,4 +38,5 @@ end
 
 after "deploy:update_code", :update_config
 after "deploy:update_code", :symlink_logs
+after "deploy:update_code", :symlink_cache
 after "deploy:update_code", :symlink_web  

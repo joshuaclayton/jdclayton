@@ -28,6 +28,7 @@ task :symlink_logs, :roles => [:app] do
 end
 
 task :symlink_cache, :roles => [:app] do
+  run "rm -rf #{shared_path}/cache/*"
   run "ln -s #{shared_path}/cache #{release_path}/public"
 end
 

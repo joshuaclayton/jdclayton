@@ -28,5 +28,6 @@ task :symlink_web, :roles => [:app] do
   run "ln -s /users/home/#{user}/web #{release_path}"
 end
 
-after "deploy:update_code", [:update_config, :symlink_logs, :symlink_web]
-  
+after "deploy:update_code", :update_config
+after "deploy:update_code", :symlink_logs
+after "deploy:update_code", :symlink_web  

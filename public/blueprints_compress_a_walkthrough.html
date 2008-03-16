@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+  <head>
+    <title>Blueprint's compress.rb: A Walkthrough</title>
+    <link href="/stylesheets/screen.css" media="screen" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+      pre {background: #dee;}
+      h2, h3, h4, h5, h6 {border-bottom: 1px solid #ddd;}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+
+    <h1>Blueprint&#8217;s compress.rb: A Walkthrough</h1>
+
+
+    	<p class="quiet">Joshua Clayton</p>
+
+
+    <div class="notice">
+
+    	<h2>This is <em>Not</em> Just a Compression Script</h2>
+
+
+    	<p>One of the purposes of the revamping of the Blueprint scripts was to eliminate the need for a lot of the other websites out there that help you build custom grids, semantic namespaces, etc.  Too many different versions of a <strong>very</strong> young <span class="caps">CSS</span> framework can wreak havoc on helping developers debug their code, especially since there&#8217;s no way to determine who&#8217;s running what version.  These scripts will do darn near everything any of the websites out there do now.  Point being, <strong>this is not just a compression script; it compresses the <span class="caps">CSS</span>, yes, but it also handles 95% of what the other websites out there provide in terms of flexibility.</strong></p>
+
+
+    	<h2>What Can It Do?</h2>
+
+
+    	<p><span class="highlight">Note that all these features are really only useful if you have one Blueprint folder on your computer and use it to export <span class="caps">CSS</span> to multiple projects.</span>  Everything listed below is project-specific as well, meaning that per project, you can define any (or all) of these settings explicitly.</p>
+
+
+    	<ul>
+    	<li><strong>Use a <code>settings.yml</code> file</strong> within the Blueprint folder to store project-specific <span class="caps">CSS</span> information for export</li>
+    		<li><strong>Export <span class="caps">CSS</span> files to remote locations</strong> (e.g. a user-defined path to a project)</li>
+    		<li>Bundle <strong>user-written <span class="caps">CSS</span> with the Blueprint output</strong> CSS, compressing it at the same time (CSS specific, so Blueprint will bundle custom (print|screen|ie).css files as needed)</li>
+    		<li>Define <strong>Blueprint-specific namespaces</strong> (all Blueprint classes would come prepended with a defined namespace)</li>
+    		<li>Assemble sites with <strong>custom grid layouts</strong>, allowing users to have total control over the column count, column width, and gutter width, without having to use another website or application to change the grids</li>
+    		<li>Simple <strong>user-defined semantic classes</strong> (setting <code>#header</code> and <code>#footer</code> to act as an element classed with &#8220;column span-24 last&#8221;)</li>
+    		<li>If you have <a href="http://www.imagemagick.org/">ImageMagick</a> and the <a href="http://rmagick.rubyforge.org/">RMagick</a> gem installed, it will <strong>generate a custom grid.png file</strong> and export it to your output path</li>
+    	</ul>
+
+
+    </div>
+
+    	<h2>Purpose.</h2>
+
+
+    	<p>The purpose of refactoring Blueprint&#8217;s compress.rb and other scripts was to make it much more extensible and useful for developers working on multiple projects.  Developers using Blueprint on one or two single sites don&#8217;t care that the full Blueprint distribution is packaged with the site.  However, developers working on multiple sites from a single computer are often left with the hassle of keeping all these copies up-to-date, with extra custom files floating around and very much a large mess.</p>
+
+
+    	<p>The goal of rewriting the compression script was to allow for extreme customization of the output Blueprint <span class="caps">CSS</span> as well as ease of keeping projects up-to-date with the newest Blueprint source without much hassle.</p>
+
+
+    	<h2>Workflow.</h2>
+
+
+    	<p>The core idea is this:</p>
+
+
+    	<ul>
+    	<li>Keep a core Blueprint folder checked out with <a href="http://subversion.tigris.org">Subversion</a> on your computer</li>
+    		<li>Create a settings.yml file within the Blueprint folder with all the specifics of each project using Blueprint</li>
+    		<li>Use the command line to generate <span class="caps">CSS</span> for a project on command
+    	<ul>
+    	<li>Incorporating any site-specific attributes
+    	<ul>
+    	<li>Namespace on all Blueprint classes</li>
+    		<li>Custom grid template rather than the standard 24 columns / 30px column width / 10px gutter width</li>
+    	</ul>
+    	</li>
+    		<li>Compressing any custom <span class="caps">CSS</span> and appending to the end of the Blueprint stylesheets</li>
+    		<li>Appending custom semantic selectors to the end of the Blueprint stylesheets</li>
+    	</ul></li>
+    	</ul>
+
+
+    	<h2>Usage.</h2>
+
+
+    	<p>There are two ways to use the compression script; either through the command line passing in any arguments, or using a settings.yml file to store all data and then passing one argument to the script.  Command line arguments are covered under &#8220;Basic Usage&#8221;, while using a settings.yml will be covered under &#8220;Advanced Usage&#8221;.</p>
+
+
+    	<h3>Basic Usage.</h3>
+
+
+    	<p>Navigating to the blueprint/scripts folder and typing <code>ruby compress.rb -h</code> reveals the basics of using the command line to generate compressed Blueprint stylesheets.</p>
+
+
+    	<h4>ruby compress.rb -h</h4>
+
+
+    <pre>
+      <code>
+    joshua-claytons-computer:scripts joshuaclayton$ ruby compress.rb -h
+    Usage: compress.rb [options]
+    Blueprint Compressor
+
+    options
+      -o, --output_path=OUTPUT_PATH    Define a different path to output generated CSS files to.
+      -n, --namespace=BP_NAMESPACE     Define a namespace prepended to all Blueprint classes (e.g. .your-ns-span-24)
+      -p, --project=PROJECT_NAME       If using the settings.yml file, PROJECT_NAME is the project name you want to export
+          --column_width=COLUMN_WIDTH  Set a new column width (in pixels) for the output grid
+          --gutter_width=GUTTER_WIDTH  Set a new gutter width (in pixels) for the output grid
+          --column_count=COLUMN_COUNT  Set a new column count for the output grid
+      -h, --help                       Show this help message.
+      </code>
+    </pre>
+
+    	<h4>Arguments.</h4>
+
+
+    	<ul>
+    	<li><code>--output_path</code> <strong>/path/to/target/locations/stylesheets</strong>
+    This will generate the Blueprint <span class="caps">CSS</span> files in a remote location instead of within the Blueprint distribution</li>
+    		<li><code>--namespace</code> <strong>your-namespace-</strong>
+    This will prepend a string to the default Blueprint classes.  Selectors will change from <code>.bp-class</code> to <code>.#{your-namespace-}bp-class</code></li>
+    		<li><code>--project</code> <strong>project_name</strong>
+    Passing in a project name will cause the compressor to look for a settings.yml file and attempt to load export settings from there</li>
+    		<li><code>--column_width</code> <strong>pixel_width</strong>
+    This sets the width of each column (in pixels) for a custom output grid</li>
+    		<li><code>--gutter_width</code> <strong>pixel_width</strong>
+    This sets the width (in pixels) between each column for a custom output grid</li>
+    		<li><code>--column_count</code> <strong>number_of_columns</strong><br/>
+    This sets the number of columns created in the grid</li>
+    	</ul>
+
+
+    	<h3>Advanced Usage.</h3>
+
+
+    	<h4>settings.yml</h4>
+
+
+    	<p>settings.yml is a <span class="caps">YAML</span> file that stores any custom settings when using the Blueprint directory as a core that generates <span class="caps">CSS</span> files for multiple projects.</p>
+
+
+    	<h5>settings.yml Sample Structure</h5>
+
+
+    <pre>
+      <code>
+    project1:
+      path: /path/to/my/project/stylesheets
+      namespace: custom-namespace-1-
+      custom_css:
+        ie.css:
+          - custom-ie.css
+        print.css:
+          - docs.css
+          - my-print-styles.css
+        screen.css:
+          - subfolder-of-stylesheets/sub_css.css
+      custom_layout:
+        column_count: 12
+        column_width: 70
+        gutter_width: 10
+      plugins:
+        - fancy-type
+        - buttons
+    project2:
+      path: /path/to/different/stylesheets
+      namespace: different-namespace-
+      custom_css:
+        screen.css:
+          - custom_screen.css
+      semantic_classes:
+        "#footer, #header": ".span-24, div.span-24" 
+        "#content": ".span-17, div.span-17, div.colborder" 
+        "#extra-content": ".span-6, div.span-6" 
+        "div#navigation": "div.span_24, .span-24" 
+        "div.section, div.entry, .feeds": ".span-6 div.span-6" 
+    project3:
+      path: /path/to/another/projects/styles
+      </code>
+    </pre>
+
+    	<h5>Structure Explanation.</h5>
+
+
+    	<p class="notice">If you don&#8217;t understand <span class="caps">YAML</span>, I suggest you go <a href="http://www.yaml.org/spec/1.1/">read the spec</a> if you haven&#8217;t already.  It&#8217;s very easy to understand and will take less than half an hour.  If you&#8217;re a developer using Blueprint in multiple projects, believe me, it&#8217;s worth the time.</p>
+
+
+    	<h6>Root Nodes.</h6>
+
+
+    	<p>Root nodes are all project names (or whatever name you want to refer to a project as).  When you pass the <code>-p (--project)</code> argument into the script, this is what you&#8217;re referencing.  Using the example above to deploy to the project named <strong>project1</strong>:</p>
+
+
+    <pre>
+      <code>
+    ruby compress.rb -p project1
+      </code>
+    </pre>
+
+    	<h6>Children Nodes.</h6>
+
+
+    	<p>Under a project fall the handful of things you can set on a specific Blueprint &#8220;deployment&#8221;.  They are:</p>
+
+
+    	<ul>
+    	<li><strong>path</strong> <em>(<strong>default</strong>: <span class="caps">BLUEPRINT</span>_DIR/blueprint)</em>: This is the output path of the compressed Blueprint files.  You do not have to use quotes if there are spaces within this string</li>
+    		<li><strong>namespace</strong> <em>(<strong>default</strong>: none)</em>: This is a namespace that will be prepended to each Blueprint class, in order to remove any class conflicts with existing <span class="caps">CSS</span>.  <code>.clear</code> would become <code>#{.your-namespace-}clear</code></li>
+    		<li><strong>custom_css</strong> <em>(<strong>default</strong>: my-ie|screen|print.css)</em>: This needs to be set if you want Blueprint to compress and append any of your <span class="caps">CSS</span> files to the end of its files.  They are media-specific, so no screen styles will be appended to print styles unless you want them to
+    	<ul>
+    	<li><strong>ie.css</strong> <em>(<strong>default</strong>: my-ie.css)</em>
+    	<ul>
+    	<li>filename.css</li>
+    		<li>filename2.css</li>
+    	</ul>
+    	</li>
+    		<li><strong>screen.css</strong> <em>(<strong>default</strong>: my-screen.css)</em>
+    	<ul>
+    	<li>filename-screen.css</li>
+    		<li>filename-screen2.css</li>
+    	</ul>
+    	</li>
+    		<li><strong>print.css</strong> <em>(<strong>default</strong>: my-print.css)</em>
+    	<ul>
+    	<li>filename-print.css</li>
+    		<li>filename-print2.css</li>
+    	</ul>
+    	</li>
+    	</ul>
+    	</li>
+    		<li><strong>custom_layout</strong> <em>(<strong>default</strong>: none)</em>: This is to define a custom grid layout.  If you don&#8217;t define this, the compressor defaults to the standard Blueprint structure
+    	<ul>
+    	<li><strong>column_count</strong> <em>(<strong>default</strong>: 24)</em>: This is the number of columns to be generated</li>
+    		<li><strong>column_width</strong> <em>(<strong>default</strong>: 30)</em>: This is the width (in pixels) of each column</li>
+    		<li><strong>gutter_width</strong> <em>(<strong>default</strong>: 10)</em>: This is the width (in pixels) of each gutter (or margin) between columns</li>
+    	</ul>
+    	</li>
+    		<li><strong>semantic_classes</strong> <em>(<strong>default</strong>: N/A)</em>: This contains a list of custom selectors set to Blueprint classes to inherit from
+    	<ul>
+    	<li><strong>&#8221;#string #of, #selectors, .classes, .and .ids&#8221;</strong>: space or comma-separated list of Blueprint classes to draw styles from</li>
+    	</ul>
+    	</li>
+    		<li><strong>plugins</strong> <em>(<strong>default</strong>: none)</em>: This allows you to append plugin stylesheets to the output Blueprint <span class="caps">CSS</span>
+    	<ul>
+    	<li>- <strong>plugin_name</strong>: This appends <span class="caps">BLUEPRINT</span>_DIR/blueprint/plugins/#{plugin_name}/(screen|print|ie).css to the specific Blueprint style.  If none of those files exist, it looks for <span class="caps">BLUEPRINT</span>_DIR/blueprint/plugins/#{plugin_name}/#{plugin_name}.css and appends it to <strong>each</strong> generated Blueprint stylesheet</li>
+    		<li>- <strong>plugin_name_2</strong></li>
+    		<li>- <strong>plugin_name_3</strong></li>
+    	</ul></li>
+    	</ul>
+
+
+    	<h2>Overview.</h2>
+
+
+    	<p>Blueprint <span class="caps">CSS</span> provides a good foundation of styles as well as a standard grid.  For a developer working on a single site, it is ideal to just include the entire Blueprint directory within the project.  However, if you&#8217;re going to be bundling Blueprint with multiple projects, and <em>especially</em> if you&#8217;re doing any custom <span class="caps">CSS</span> or grid manipulation, it is ideal to use the <code>settings.yml</code> file to store site-specific data and output from that directory.  An example file has been bundled within Blueprint (<code>BLUEPRINT_DIR/lib/settings.example.yml</code>) to act as a reference.</p>
+
+
+    	<h2>About the Author.</h2>
+
+
+    	<p>I&#8217;m a twenty-four year old web developer from Grand Rapids, MI working for an incredible company called <a href="http://www.fusionary.com">Fusionary Media</a> as a Ruby on Rails developer.</p>
+    
+
+  </div>
+  <script src="http://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    // <![CDATA[
+    _uacct = "UA-407994-1";
+    urchinTracker();
+    // ]]>
+  </script>
+  </body>
+</html>

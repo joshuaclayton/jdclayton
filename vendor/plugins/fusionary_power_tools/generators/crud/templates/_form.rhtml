@@ -1,0 +1,17 @@
+<%% form_for @<%= file_name %> do |f| %>
+
+  <dl>
+    <dt>Name:</dt>
+    <dd><%%#= f.text_field :name %></dd>
+    
+    <dt> </dt>
+    <dd>
+    <%% if @<%= file_name %>.new_record? %>
+      <%%= submit_tag "Create" %>
+    <%% else %>
+      <%%= submit_tag "Update" %> or <%%= link_to "Cancel", <%= file_name %>_path(@<%= file_name %>) %>
+    <%% end %>
+    </dd>
+  </dl>
+
+<%% end %>

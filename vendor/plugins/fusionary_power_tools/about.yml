@@ -1,0 +1,6 @@
+author: Fusionary
+summary: Useful test assertions, assorted rake tasks, and a CRUD generator.
+homepage: http://www.fusionary.com
+plugin: http://bluto.fusionary.com/svn/fusionary/plugins/fusionary_power_tools
+version: 0.1
+rails_version: 1.0+

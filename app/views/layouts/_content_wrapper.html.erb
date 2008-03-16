@@ -1,0 +1,7 @@
+<% if yield(:extra_content) %>
+  <%= render :partial => 'layouts/content' %>
+  <hr class="hide" />
+  <%= render :partial => 'layouts/extra_content' %>
+<% else %>
+  <%= render :partial => 'layouts/content' %>
+<% end %>

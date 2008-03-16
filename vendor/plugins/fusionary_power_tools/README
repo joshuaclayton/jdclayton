@@ -1,0 +1,17 @@
+CrudGenerator
+=============
+
+Generates a CRUD-ready controller and model.
+
+Example:
+
+  script/generate crud thing
+
+Will generate a Thing model (and associated migration) and a Things controller.
+This generator assumes the use of simply_restful so don't forget to put something like:
+
+  map.resource :thing
+
+in your routes.rb.
+
+Happy CRUDing!

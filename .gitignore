@@ -2,6 +2,7 @@
 log/*
 tmp/*
 config/database.yml
+config/lighttpd.conf
 *.DS_Store
 db/*.db
 db/schema.rb

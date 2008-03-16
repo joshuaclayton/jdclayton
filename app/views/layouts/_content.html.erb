@@ -1,0 +1,25 @@
+<% column do -%>
+  <% if yield(:search) %>
+    <% column :three_fourths do %>
+      <h2 class="alt"><%= yield :sub_header %></h2>
+    <% end %>
+    <% column :one_fourth, :last do %>
+      <%= yield :search %>
+    <% end %>
+  <% else %>
+    <h2 class="alt"><%= yield :sub_header %></h2>
+  <% end %>
+  <% column :full, :id => "inline-form" do %>
+    <%= yield :inline_form %>
+  <% end %>
+<% end -%>
+<% if yield(:search) || yield(:sub_header) %><hr/><% end %>
+<% column do %>
+  <% unless flash[:notice].blank? %>
+    <% column :full, :id => 'flash-notice' do %>
+      <p class="notice"><%= icon(:error) %><%= flash[:notice] %></p>
+    <% end %>
+  <% end %>
+  <%= yield :information %>
+<% end %>
+<%= yield :content %>

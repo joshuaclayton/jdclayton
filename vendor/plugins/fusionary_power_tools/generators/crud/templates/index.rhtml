@@ -1,0 +1,7 @@
+<h1><%= class_name.pluralize %></h1>
+
+<%%= link_to "Create", new_<%= file_name %>_path %>
+  
+<ul>
+  <%%= render :partial => @<%= table_name %> %>
+</ul>

@@ -2,12 +2,12 @@
 module ApplicationHelper
   def content(*args, &block)
     args.insert(0, :three_fourths) if args.empty?
-    content_builder(:content, *(args + [{:id => "content"}]), &block)
+    content_builder(:content, *args, &block)
   end
   
   def extra_content(*args, &block)
     args.insert(0, :one_fourth) if args.empty?
-    content_builder(:extra_content, *(args + [:last, {:id => "extra-content"}]), &block)
+    content_builder(:extra_content, *(args + [:last]), &block)
   end
   
   def inline_form(&block)

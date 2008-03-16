@@ -1,4 +1,6 @@
-body {font-family: Garamond, Georgia, Times, serif;}
+body {font-family: Garamond, Georgia, Times, serif; font-size: 15px;}
 #header {text-align: center;}
 #header a {text-decoration: none; color: #222;}
-#footer {text-align: center;}
+p {text-align: justify;}
+#footer p {text-align: center;}
+/*div {border: 1px solid #ccc;}*/

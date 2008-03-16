@@ -1,7 +1,7 @@
 --- 
 user: jclayton
 group: jclayton
-log_file: log/mongrel.log
+log_file: /users/home/jclayton/apps/jdclayton/shared/log/mongrel.log
 cwd: /users/home/jclayton/apps/jdclayton/current
 port: 4011
 environment: production

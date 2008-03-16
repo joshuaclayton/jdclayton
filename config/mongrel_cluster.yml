@@ -4,6 +4,6 @@ group: jclayton
 log_file: /users/home/jclayton/apps/jdclayton/shared/log/mongrel-4011.log
 cwd: /users/home/jclayton/apps/jdclayton/current
 port: 4011
+daemon: true
 environment: production
-pid_file: /users/home/jclayton/apps/jdclayton/shared/pids/mongrel-4011.pid
 address: 127.0.0.1

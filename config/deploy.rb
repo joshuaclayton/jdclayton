@@ -12,6 +12,6 @@ set :server, "coloma.joyent.us"
 set :mongrel_port, 4011
 set :mongrel_servers, 1
 
-role :app, "#{server}"
-role :web, "#{server}"
-role :db,  "#{server}", :primary => true
+role :app, "coloma.joyent.us"
+role :web, "coloma.joyent.us"
+role :db,  "coloma.joyent.us", :primary => true

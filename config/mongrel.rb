@@ -8,7 +8,6 @@ namespace :deploy do
       task t, :roles => :app do
         root = `pwd`.to_s.strip
         settings = YAML::load(File.new(File.join(root, "config", "mongrel_cluster.yml")).read)
-        # raise "#{settings.inspect}"
         #invoke_command checks the use_sudo variable to determine how to run the mongrel_rails command
         invoke_command "mongrel_rails #{t.to_s} -P #{settings["pid_file"]}#{" -C #{mongrel_conf}" if t == :start}", :via => run_method
       end

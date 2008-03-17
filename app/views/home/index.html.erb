@@ -1,7 +1,7 @@
 <% content :eleven_twelfths, prepend_one_twentyfourth() do %>
   <h2>Welcome</h2>
   <p>My name is Josh Clayton, and I'm a <%= @age %> year old web develper addicted to <%= link_to "Ruby on Rails", "http://www.rubyonrails.org" %>.</p>
-  <p>I live in the West Michigan area and work for a company called <%= link_to "Fusionary Media", "http://www.fusionary.com"%>.</p>
+  <p>I live in the West Michigan area and work for <%= link_to "Fusionary Media", "http://www.fusionary.com"%>.</p>
 <% end %>
 <% content :two_thirds, prepend_one_sixth() do %><hr/><% end %>
 <% content :eleven_twelfths, prepend_one_twentyfourth() do %>
@@ -35,6 +35,5 @@
     <dd>joshua dot clayton at gmail dot com</dd>
     <dt>AIM</dt>
     <dd><%= link_to "xjoshclaytonx", "aim:goim?screenname=xjoshclaytonx" %></dd>
-      
   </dl>
 <% end %>

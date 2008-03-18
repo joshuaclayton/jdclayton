@@ -1,0 +1,2 @@
+class Flickr < FeedItem
+end

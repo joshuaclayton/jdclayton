@@ -3,6 +3,9 @@
 
 class ApplicationController < ActionController::Base
   include ExceptionLoggable
+  # Be sure to include AuthenticationSystem in Application Controller instead
+  include AuthenticatedSystem
+  
   helper :all # include all helpers, all the time
 
   # See ActionController::RequestForgeryProtection for details

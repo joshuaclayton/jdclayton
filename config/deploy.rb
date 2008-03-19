@@ -6,7 +6,7 @@ set :mongrel_conf, "#{current_path}/config/mongrel_cluster.yml"
 
 set :scm, :git
 set :repository,  "git@github.com:joshuaclayton/jdclayton.git"
-# set :deploy_vid, :remote_cache
+set :git_shallow_clone, 1
 
 set :server, "coloma.joyent.us"
 set :mongrel_port, 4011

@@ -4,10 +4,12 @@ module AuthenticatedBase
     base.set_table_name base.name.tableize
     
     base.validates_presence_of     :login, :email
-    base.validates_presence_of     :password,                   :if => :password_required?
-    base.validates_presence_of     :password_confirmation,      :if => :password_required?
-    base.validates_length_of       :password, :within => 4..40, :if => :password_required?
-    base.validates_confirmation_of :password,                   :if => :password_required?
+    base.with_options :if => :password_required? do |base_pass|
+      base_pass.validates_presence_of     :password
+      base_pass.validates_presence_of     :password_confirmation
+      base_pass.validates_length_of       :password, :within => 4..40
+      base_pass.validates_confirmation_of :password
+    end
     base.validates_length_of       :login,    :within => 3..40
     base.validates_length_of       :email,    :within => 3..100
     base.validates_uniqueness_of   :login, :email, :case_sensitive => false
@@ -47,27 +49,6 @@ module AuthenticatedBase
 
   def remember_token?
     remember_token_expires_at && Time.now.utc < remember_token_expires_at 
-  end
-
-  # These create and unset the fields required for remembering users between browser closes
-  def remember_me
-    remember_me_for 2.weeks
-  end
-
-  def remember_me_for(time)
-    remember_me_until time.from_now.utc
-  end
-
-  def remember_me_until(time)
-    self.remember_token_expires_at = time
-    self.remember_token            = encrypt("#{email}--#{remember_token_expires_at}")
-    save(false)
-  end
-
-  def forget_me
-    self.remember_token_expires_at = nil
-    self.remember_token            = nil
-    save(false)
   end
 
   protected

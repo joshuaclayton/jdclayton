@@ -5,16 +5,58 @@
 <% end %>
 <% content :two_thirds, prepend_one_sixth() do %><hr/><% end %>
 <% content :eleven_twelfths, prepend_one_twentyfourth() do %>
-  <h2>Recent Work I've Done</h2>
+  <h2>Recent Activity</h2>
+  <% column do %>
+    <% column 5 do %>
+      <h3>Currently</h3>
+    <% end %>
+    <% column 17, :last do %>
+      <% column 12 do %>
+        <%= "#{textilize @tweet.body}" %>
+      <% end %>
+      <% column 4 do %>
+        <p class="small time"><%= distance_of_time_in_words_to_now @tweet.published_at %> ago</p>
+      <% end %>
+      <% column 1, :last do %>
+        <p><%= link_to("#", @tweet.link, :class => "small") %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+  
+  <% column do %>
+    <% column 5 do %>
+      <h3>Musically</h3>
+    <% end %>
+    <% column 17, :last do %>
+      <% @tracks.each do |track| %>
+        <% column do %>
+          <% column 12 do %>
+            <p class="spaced small"><%= "<strong>#{track.song}</strong> / <strong>#{track.artist}</strong>" %></p>
+          <% end %>
+          <% column 4 do %>
+            <p class="spaced small time"><%= distance_of_time_in_words_to_now track.published_at %> ago</p>
+          <% end %>
+          <% column 1, :last do %>
+            <p class="spaced small"><%= link_to("#", track.link, :class => "small") %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <hr class="space"/>
+<% end %>
+<% content :two_thirds, prepend_one_sixth() do %><hr/><% end %>
+<% content :eleven_twelfths, prepend_one_twentyfourth() do %>
+  <h2>Recent Work</h2>
   <dl>
-    <dt><%= link_to "Blueprint CSS", "http://blueprintcss.googlecode.com" %> | <%= link_to "Walkthrough", "blueprints_compress_a_walkthrough.html" %></dt>
-    <dd>Wrote the compression script and accompanying classes that completely revamped Blueprint workflow</dd>
+    <dt><%= link_to "Blueprint CSS", "http://blueprintcss.googlecode.com" %></dt>
+    <dd>Wrote the compression script and accompanying classes that completely revamped Blueprint workflow (and accompanying <%= link_to "compress.rb Walkthrough", "blueprints_compress_a_walkthrough.html" %>)</dd>
     <dt><%= link_to "acts_as_searchable", "http://github.com/joshuaclayton/acts_as_searchable/" %></dt>
     <dd>Ruby on Rails plugin for easy querying of ActiveRecord models by a string</dd>
     <dt><%= link_to "acts_as_archivable", "http://github.com/joshuaclayton/acts_as_archivable/" %></dt>
     <dd>Ruby on Rails plugin for easy querying of ActiveRecord models by a date</dd>
     <dt><%= link_to "Alpha Heroes", "http://www.alphaheroes.org/" %></dt>
-    <dd>Website dedicated to the five Marines Alpha Co. 1/24 lost during their tour to Fallujah, Iraq</dd>
+    <dd>Website dedicated to five Marines Alpha Co. 1/24 lost during their tour to Fallujah, Iraq</dd>
   </dl>
 <% end %>
 <% content :two_thirds, prepend_one_sixth() do %><hr/><% end %>

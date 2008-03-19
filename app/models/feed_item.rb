@@ -1,5 +1,5 @@
 class FeedItem < ActiveRecord::Base
-  acts_as_archivable :on => :published_at
+  acts_as_archivable :on => :published_at, :order => "DESC"
   
   belongs_to :feed
   validates_uniqueness_of :guid

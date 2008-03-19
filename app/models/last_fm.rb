@@ -10,7 +10,6 @@ class LastFM < FeedItem
   end
   
   before_save do |item|
-    item.published_at = item.published_at.advance(:hours => -4)
     item.guid = "#{item.artist}/#{item.album}/#{item.song}/#{item.published_at.to_s}"
     item.description = item.link
     item.valid?

@@ -1,0 +1,8 @@
+ActsAsArchivable
+================
+
+ActsAsArchivable is a collection of methods that I found myself using quite a bit related 
+to models with time-stamped columns.  Initial things were blog entries in regards to archives, 
+but I found that I was using these more and more in various ways throughout many models.
+
+This library requires ActiveRecord.

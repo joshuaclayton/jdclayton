@@ -1,9 +1,9 @@
 body {font-family: Garamond, Georgia, Times, serif; font-size: 15px;}
-#header {text-align: center;}
 #header a {text-decoration: none; color: #222;}
 p {text-align: justify;}
 
-h2 {text-align: center;}
+#header, h2 {text-align: center;}
+h1, h2, h3, h4 {text-shadow: #aaa 1px 1px 2px;}
 .container {background: #f2f2f2; padding: 20px 20px 0 20px; border: 1px solid #eaeaea;}
 hr.space {background: #f2f2f2;}
 p.spaced {padding: .4em 0; margin-bottom: 1px;}

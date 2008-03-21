@@ -7,30 +7,29 @@
 <% content :eleven_twelfths, prepend_one_twentyfourth() do %>
   <h2>Recent Activity</h2>
   <% column do %>
-    <% column 5 do %>
-      <h3>Currently</h3>
+    <% column 4 do %>
+      <h3>Twittering</h3>
     <% end %>
-    <% column 17, :last do %>
-      <% column 12 do %>
+    <% column 18, :last do %>
+      <% column 13 do %>
         <%= "#{textilize @tweet.body}" %>
       <% end %>
       <% column 4 do %>
         <p class="small time"><%= distance_of_time_in_words_to_now @tweet.published_at %> ago</p>
       <% end %>
       <% column 1, :last do %>
-        <p><%= link_to("#", @tweet.link, :class => "small") %></p>
+        <p class="spaced small"><%= link_to("#", @tweet.link, :class => "small") %></p>
       <% end %>
     <% end %>
   <% end %>
-  
   <% column do %>
-    <% column 5 do %>
-      <h3>Musically</h3>
+    <% column 4 do %>
+      <h3>Listening</h3>
     <% end %>
-    <% column 17, :last do %>
+    <% column 18, :last do %>
       <% @tracks.each do |track| %>
         <% column do %>
-          <% column 12 do %>
+          <% column 13 do %>
             <p class="spaced small"><%= "<strong>#{track.song}</strong> / <strong>#{track.artist}</strong>" %></p>
           <% end %>
           <% column 4 do %>
@@ -44,9 +43,26 @@
     <% end %>
   <% end %>
   <hr class="space"/>
+  <% column do %>
+    <% column 4 do %>
+      <h3>Tumbling</h3>
+    <% end %>
+    <% column 18, :last do %>
+      <% column 13 do %>
+        <%= @tumblr.description %>
+      <% end %>
+      <% column 4 do %>
+        <p class="small time"><%= distance_of_time_in_words_to_now @tumblr.published_at %> ago</p>
+      <% end %>
+      <% column 1, :last do %>
+        <p><%= link_to("#", @tumblr.link, :class => "small") %></p>
+      <% end %>
+    <% end %>
+  <% end %>
+  <hr class="space"/>
 <% end %>
 <% content :two_thirds, prepend_one_sixth() do %><hr/><% end %>
-<% content :eleven_twelfths, prepend_one_twentyfourth() do %>
+<% content :seven_twelfths, prepend_one_twentyfourth() do %>
   <h2>Recent Work</h2>
   <dl>
     <dt><%= link_to "Blueprint CSS", "http://blueprintcss.googlecode.com" %></dt>
@@ -59,8 +75,7 @@
     <dd>Website dedicated to five Marines Alpha Co. 1/24 lost during their tour to Fallujah, Iraq</dd>
   </dl>
 <% end %>
-<% content :two_thirds, prepend_one_sixth() do %><hr/><% end %>
-<% content :five_twelfths, prepend_one_twentyfourth(), append_one_twentyfourth() do %>
+<% content :seven_twentyfourths, prepend_one_twentyfourth(), append_one_twentyfourth(), :last do %>
   <h2>Social Networking</h2>
   <ul>
     <li><%= link_to "Twitter", "http://twitter.com/joshuaclayton" %></li>
@@ -69,8 +84,6 @@
     <li><%= link_to "Last FM", "http://www.last.fm/user/joshuaclayton" %></li>
     <li><%= link_to "Tumblr", "http://jdclayton.tumblr.com/" %></li>
   </ul>
-<% end %>
-<% content :five_twelfths, prepend_one_twentyfourth(), append_one_twentyfourth(), :last do %>
   <h2>Contact</h2>
   <dl>
     <dt>Email</dt>

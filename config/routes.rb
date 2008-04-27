@@ -7,7 +7,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
 
   map.root :controller => "home"
-  map.resources :logged_exceptions
+
+  # logged exceptions
+  map.exceptions 'logged_exceptions/:action/:id', :controller => 'logged_exceptions', :action => 'index', :id => nil
+  
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

@@ -1,6 +1,11 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
+class LoggedExceptionsController < ActionController::Base
+  protect_from_forgery :secret => '5c4b52c75de67f83be116cc5cd5a9c0e'
+end
+
+
 class ApplicationController < ActionController::Base
   include ExceptionLoggable
   # Be sure to include AuthenticationSystem in Application Controller instead

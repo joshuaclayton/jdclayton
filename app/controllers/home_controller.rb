@@ -1,6 +1,4 @@
 class HomeController < ApplicationController
-  # caches_page :index
-  
   def index
     dob = Date.parse("8/21/1983")
     @age = Date.today.year - dob.year

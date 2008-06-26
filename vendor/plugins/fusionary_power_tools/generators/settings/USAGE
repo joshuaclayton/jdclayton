@@ -1,5 +1,0 @@
-ruby script/generate settings
-
-This generator will give you a simple CRUD interface to your application settings.
-It is meant to be used with the settings plugin, which can be found at 
-http://beautifulpixel.textdriven.com/svn/plugins/settings

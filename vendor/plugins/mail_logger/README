@@ -1,9 +1,0 @@
-Drop this entire directory into /vendor/plugins
-
-Create a database table using the following...
-
-create_table :mail_logs do |t|
-  t.column :message,    :text
-  t.column :form_name,  :string
-  t.column :created_at, :datetime
-end

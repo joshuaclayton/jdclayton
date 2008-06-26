@@ -10,10 +10,6 @@ module ApplicationHelper
     content_builder(:extra_content, *(args + [:last]), &block)
   end
   
-  def inline_form(&block)
-    content_builder(:inline_form, :eleven_twelfths, prepend_one_twentyfourth(), :last, :id => 'inline-form', &block)
-  end
-  
   private
   
   def content_builder(area, *args, &block)

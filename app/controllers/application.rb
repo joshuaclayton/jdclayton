@@ -8,16 +8,11 @@ end
 
 class ApplicationController < ActionController::Base
   include ExceptionLoggable
-  # Be sure to include AuthenticationSystem in Application Controller instead
-  include AuthenticatedSystem
-  
   helper :all # include all helpers, all the time
 
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery :secret => '8230f0c5bfff1ff21ba21a229c1106c1'
   
-  BLUEPRINT_CONTENT_WIDTH = 24
+  BLUEPRINT_CONTENT_WIDTH = 24 unless defined? BLUEPRINT_CONTENT_WIDTH
 
   before_filter :manage_page_title
   

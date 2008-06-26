@@ -3,7 +3,6 @@ class FeedItem < ActiveRecord::Base
   
   belongs_to :feed
   validates_uniqueness_of :guid
-  
   validates_presence_of :description
   
   def pubDate=(time)
@@ -14,9 +13,7 @@ class FeedItem < ActiveRecord::Base
     self.published_at = Time.parse(time) rescue Time.now
   end
   
-  class << self
-    def types
-      Feed.sources
-    end
+  def self.types
+    Feed.sources
   end
 end

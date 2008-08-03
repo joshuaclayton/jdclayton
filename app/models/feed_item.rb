@@ -14,6 +14,6 @@ class FeedItem < ActiveRecord::Base
   end
   
   def self.types
-    Feed.sources
+    Feed::SOURCES
   end
 end

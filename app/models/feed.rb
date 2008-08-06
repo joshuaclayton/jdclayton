@@ -1,3 +1,5 @@
+require 'net/http'
+
 module Feeds
   module Parsing
     def self.included(base)

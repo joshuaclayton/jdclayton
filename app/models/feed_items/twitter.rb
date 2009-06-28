@@ -5,6 +5,7 @@ class Twitter < FeedItem
     desc = self.description
     parsed_text = if (users = self.description.scan(/\@[\w\_]+/)).any?
       users.each {|user| desc = desc.gsub(user, "<a href='http://twitter.com/#{user.gsub(/\@/, '')}'>#{user}</a>") }
+      desc
     else
       desc
     end
